@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Popup CSS3 - Autopopup</title>
+    	<style type="text/css">
+	
+		@-webkit-keyframes autopopup {
+			from {opacity: 0; margin-top:-200px;}
+			to {opacity: 1;}
+		}
+		@-moz-keyframes autopopup {
+			from {opacity: 0;margin-top:-200px;}
+			to {opacity: 1;}
+		}
+		@keyframes autopopup {
+			from {opacity: 0;margin-top:-200px;}
+			to {opacity: 1;}
+		}
+	
+	
+		#popup {
+			background-color: rgba(0,0,0,0.8); /* rgba(red, green, blue, alpha) */
+			position: fixed; /* The element is positioned relative to the browser window */
+			top:0;
+			left:0;
+			right:0;
+			bottom:0;
+			margin:0;
+			
+			display:none;
+			z-index:999;
+						
+			-webkit-animation:autopopup 2s;
+			-moz-animation:autopopup 2s;
+			animation:autopopup 2s;
+			
+		}
+	
+		#popup:target { /* The :target selector can be used to style the current active target element. Similar to :hover, :target activates when elemnt is clicked */
+			-webkit-transition:all 1s;
+			-moz-transition:all 1s;
+			transition:all 1s;
+			opacity: 0;
+			visibility: hidden;
+		} 
+	
+
+		@media (min-width: 768px){
+			.popup-container {
+				width:640px;
+			}
+		}
+		@media (max-width: 767px){
+			.popup-container {
+				width:100%;
+			}
+		}
+	
+		.popup-container {
+			position: relative;
+			margin:7% auto;
+			padding:30px 50px;
+			background-color: #fafafa;
+			color:#333;
+			border-radius: 3px;
+		}
+	
+		a.popup-close {
+			position: absolute;
+			top:3px;
+			right:3px;
+			background-color: #333;
+			padding:7px 10px;
+			font-size: 20px;
+			text-decoration: none;
+			line-height: 1;
+			color:#fff;
+		}
+			
+		/* GREENSOC ANIMATION */	
+		#bg {	
+			min-height:360px;				
+			background: #fff url("img/bg.jpg") no-repeat left top ;			
+		}
+		
+		#logo-home {
+			position:absolute;	
+			top:120px;				
+			left:100px;
+		}
+		#logo-away {
+			position:absolute;			
+			top:120px;
+			right:110px;
+		}	
+		#bonus-img {
+			text-align:center;			
+		}
+			
+		#oran {
+			position:absolute;
+			top:360px;
+			left:100px;
+		}
+		#oran2 {
+			position:absolute;			
+			top:390px;		
+			left:100px;
+		}
+	
+		#team-home {
+			position:absolute;	
+			top:280px;				
+			left:110px;
+			font-size:18px;
+
+		}
+		#team-away {
+			position:absolute;			
+			top:280px;
+			right:110px;
+			font-size:18px;			
+		}	
+		
+	</style>
+    
+</head>
+
+
+
+<body>
+
+    <div class="popup-wrapper" id="popup">
+        <div class="popup-container">
+    
+                <h2 id="heaher2" style="text-align:center;">
+                	Bahisfaktor ile kazan!
+				</h2>
+                
+                <div id="bg">                    
+                    
+                	<div id="logo-home">
+	                	<img src="img/logo-home.png" alt="logo" />
+                    </div>
+                    <div id="logo-away">
+                        <img src="img/logo-away.png" alt="logo" />                
+                    </div>
+                    
+                    <div id="bonus-img">
+	                	<img src="img/bonus.png" alt="logo" />
+                    </div>
+                    
+                    <div id="team-home" style="color:#fff;">
+                    	B. DORTMUND
+                    </div>
+                    <div id="team-away" style="color:#fff;">
+                    	LIVERPOOL
+                    </div>                    
+                    
+                    <div id="oran">
+                    	<img src="img/oran.png" alt="en yuksek bahis oranlari" />
+					</div>
+                    <div id="oran2">
+                    	<img src="img/oran2.png" alt="en yuksek bahis oranlari" />
+					</div>                    
+                    
+                </div>
+                
+                
+            <a class="popup-close" href="#popup">X</a>
+        </div>
+    </div>
+
+
+	<!-- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>              
+     -->    
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js'></script>
+    
+	<script type="text/javascript">
+		/* 
+		Before HTML5, application data had to be stored in cookies, included in every server request. 
+		Local storage is more secure, and large amounts of data can be stored locally, without affecting website performance. 
+		--------------------------------------------------------
+		window.localStorage - stores data with no expiration date
+		window.sessionStorage - stores data for one session (data is lost when the browser tab is closed) 
+		----------------------
+		To remove the item, you can use — can you guess? — the removeItem() method:
+		*/
+		
+		
+		window.onload = myFunction; //call on page load
+		
+		function myFunction() {
+		
+	        var current = new Date();	        
+			var start = new Date("Apr 01, 2016 19:40:00");        
+			var expiry = new Date("Apr 07, 2020 18:30:00");
+			
+			// Show this pop up only between start and expiry date. We have different popups for different days
+			if( (current.getTime() > start.getTime() ) && (current.getTime() <  expiry.getTime() ) )  {            				
+			
+				// Check browser support
+				if (typeof(Storage) !== "undefined") {
+						
+						// We want to show the popup once per SESSION. 
+						// popUpAlreadyShown is NEVER 'yes' first time page loads because it is not set yet . 
+						// We set this storage var to YES inside the IF() after displaying the popUp						
+						if( sessionStorage.getItem("popUpAlreadyShown") !== "yes" ) { 
+							
+							//$("#popup").css('display', 'visible');
+							//$("#popup" ).show();				   
+							document.getElementById("popup").style.display = "block";	   
+																		
+							
+							TweenLite.from("#logo-home", 1, {left:-200, rotation:-90, scale:0, ease:Back.easeOut, delay:1.5});
+							TweenLite.from("#logo-away", 1, {left:"+=400", rotation:-90, scale:0, ease:Back.easeOut, delay:1.5});		
+							
+							TweenLite.from("#team-home", 0.5, {opacity:0, rotation:-90, scale:0, ease:Back.easeOut, delay:2});						
+							TweenLite.from("#team-away", 0.5, {opacity:0, rotation:-90, scale:0, ease:Back.easeOut, delay:2});										
+							
+							TweenLite.from("#oran", 0.5, {left:-200, rotation:-90, scale:0, ease:Back.easeOut, delay:2.3} );		
+							TweenLite.from("#oran2", 0.5, {left:"+=400", rotation:-90, scale:0, ease:Back.easeOut, delay:2.3} );					
+							//TweenLite.from("#oran", 0.3, {opacity:0, top:100, ease:Power1.easeOut, delay:2 } );
+							
+							TweenLite.from("#bonus-img", 1, {opacity:0, bottom:-100, ease:Power4.easeInOut,  delay:2.7});													
+							
+							//Now that we have shown the popup once, we can store this as 'yes'
+							sessionStorage.setItem("popUpAlreadyShown", "yes");
+							
+						} 
+						
+						
+				} else { //for browsers that don't support storege
+					
+					//we will be displaying the POPUP on each page Re-fresh
+					//OR WE WON'T DISPLAY THE POPUP
+					
+				}
+				
+			} 
+						
+		}
+		
+    </script>
+	
+    
+</body>
+</html>
